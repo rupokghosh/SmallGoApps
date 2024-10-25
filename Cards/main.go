@@ -5,7 +5,7 @@ import "fmt"
 func main() {
 	fmt.Println("Cards!")
 	d1 := newDeck()
-	d2, d3 := deal(d1, 5)
+	d2 := d1.toString()
 	fmt.Println(d2)
-	fmt.Println(d3)
+	d1.saveToFile("mycards")
 }
