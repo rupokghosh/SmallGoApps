@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
+
+	"math/rand"
 )
 
 type deck []string
@@ -49,10 +52,20 @@ func (d deck) saveToFile(filename string) error {
 func newDeckFromFile(filename string) deck {
 
 	receivingDeck, err := os.ReadFile(filename)
-	if err != nil{
+	if err != nil {
 		fmt.Println("error", err)
 	}
-	s:= strings.Split(string(receivingDeck), ",")
+	s := strings.Split(string(receivingDeck), ",")
 	return deck(s)
 
+}
+
+func (d deck) shuffle() {
+	source := rand.NewSource(time.Now().UnixNano()) // use this to generate a new int for every second
+	r := rand.New(source)                           // use the source object to create the new random number
+	for i := range d {
+		newPosition := r.Intn(len(d) - 1)
+		d[i], d[newPosition] = d[newPosition], d[i]
+
+	}
 }
